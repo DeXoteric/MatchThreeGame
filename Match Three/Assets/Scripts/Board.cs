@@ -2,21 +2,22 @@
 
 public class Board : MonoBehaviour
 {
-    [SerializeField] int width;
-    [SerializeField] int height;
+    [SerializeField] private int width;
+    [SerializeField] private int height;
+    [SerializeField] private int borderSize;
+    [SerializeField] private GameObject tilePrefab;
 
-    [SerializeField] GameObject tilePrefab;
-
-    Tile[,] allTiles;
+    private Tile[,] allTiles;
 
     private void Start()
     {
         allTiles = new Tile[width, height];
 
         SetupTiles();
+        SetupCamera();
     }
 
-    void SetupTiles()
+    private void SetupTiles()
     {
         for (int x = 0; x < width; x++)
         {
@@ -30,5 +31,16 @@ public class Board : MonoBehaviour
                 tile.transform.parent = transform;
             }
         }
+    }
+
+    private void SetupCamera()
+    {
+        Camera.main.transform.position = new Vector3((width - 1) / 2f, (height - 1) / 2f, -10f);
+
+        float aspectRatio = (float)Screen.width / (float)Screen.height;
+        float verticalSize = height / 2f + borderSize;
+        float horizontalSize = (width / 2f + borderSize) / aspectRatio;
+
+        Camera.main.orthographicSize = (verticalSize > horizontalSize) ? verticalSize : horizontalSize;
     }
 }
