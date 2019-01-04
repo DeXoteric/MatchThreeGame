@@ -7,6 +7,8 @@ public class GamePiece : MonoBehaviour
     [SerializeField] private int yIndex;
     [SerializeField] private InterpolationType interpolationType = InterpolationType.SmootherStep;
 
+    private Board board;
+
     private bool isMoving = false;
 
     public enum InterpolationType
@@ -18,6 +20,7 @@ public class GamePiece : MonoBehaviour
         SmootherStep
     };
 
+    
     private void Update()
     {
         /*
@@ -30,6 +33,11 @@ public class GamePiece : MonoBehaviour
             Move((int)transform.position.x - 1, (int)transform.position.y, 0.5f);
         }
         */
+    }
+
+    public void Init(Board board)
+    {
+        this.board = board;
     }
 
     public void SetCoord(int x, int y)
@@ -59,8 +67,10 @@ public class GamePiece : MonoBehaviour
             if (Vector3.Distance(transform.position, destination) < 0.01f)
             {
                 reachedDestination = true;
-                transform.position = destination;
-                SetCoord((int)destination.x, (int)destination.y);
+                if (board != null)
+                {
+                    board.PlaceGamePiece(this, (int)destination.x, (int)destination.y);
+                }
                 break;
             }
 

@@ -153,6 +153,7 @@ MonoBehaviour:
   - {fileID: 5995077812752528159, guid: ad8d6a967f6f12743abe69b81d87fffe, type: 3}
   - {fileID: 4949012624392072896, guid: 82057ab29fbff9f4f866a114478ea061, type: 3}
   - {fileID: 8902657207702907242, guid: 7c8af0cc1a58aa04d9b5bbfdda92549d, type: 3}
+  swapTime: 0.3
 --- !u!4 &77203445
 Transform:
   m_ObjectHideFlags: 0
