@@ -11,6 +11,9 @@ public class Board : MonoBehaviour
     private Tile[,] allTiles;
     private GamePiece[,] allGamePieces;
 
+    Tile clickedTile;
+    Tile targetTile;
+
     private void Start()
     {
         allTiles = new Tile[width, height];
@@ -89,5 +92,37 @@ public class Board : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ClickTile (Tile tile)
+    {
+        if (clickedTile == null)
+        {
+            clickedTile = tile;
+        }
+    }
+
+    public void DragToTile (Tile tile)
+    {
+        if (clickedTile != null)
+        {
+            targetTile = tile;
+        }
+    }
+
+    public void ReleaseTile()
+    {
+        if (clickedTile != null && targetTile != null)
+        {
+            SwitchTiles(clickedTile, targetTile);
+        }
+    }
+
+    void SwitchTiles(Tile clickedTile, Tile targetTile)
+    {
+        //add code to switch
+
+        clickedTile = null;
+        targetTile = null;
     }
 }
