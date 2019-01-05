@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class GamePiece : MonoBehaviour
 {
-    [SerializeField] private int xIndex;
-    [SerializeField] private int yIndex;
+    [SerializeField] public int xIndex;
+    [SerializeField] public int yIndex;
     [SerializeField] private InterpolationType interpolationType = InterpolationType.SmootherStep;
     [SerializeField] public MatchValue matchValue;
 
