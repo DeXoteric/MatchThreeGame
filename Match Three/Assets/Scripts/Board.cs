@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Board : MonoBehaviour
 {
@@ -11,7 +12,6 @@ public class Board : MonoBehaviour
 
     private Tile[,] allTiles;
     private GamePiece[,] allGamePieces;
-
 
     private Tile clickedTile;
     private Tile targetTile;
@@ -143,7 +143,7 @@ public class Board : MonoBehaviour
         targetPiece.Move(clickedTile.xIndex, clickedTile.yIndex, swapTime);
     }
 
-    bool IsNextTo (Tile startTile, Tile endTile)
+    private bool IsNextTo(Tile startTile, Tile endTile)
     {
         if (Mathf.Abs(startTile.xIndex - endTile.xIndex) == 1 && startTile.yIndex == endTile.yIndex)
         {
@@ -156,5 +156,59 @@ public class Board : MonoBehaviour
         }
 
         return false;
+    }
+
+    private List<GamePiece> FindMatches(int startX, int startY, Vector2 searchDirection, int minLenght = 3)
+    {
+        List<GamePiece> matches = new List<GamePiece>();
+        GamePiece startPiece = null;
+
+        if (IsWithinBounds(startX, startY))
+        {
+            startPiece = allGamePieces[startX, startY];
+        }
+
+        if (startPiece != null)
+        {
+            matches.Add(startPiece);
+        }
+        else
+        {
+            return null;
+        }
+
+        int nextX;
+        int nextY;
+
+        int maxValue = (width > height) ? width : height;
+
+        for (int i = 1; i < maxValue - 1; i++)
+        {
+            nextX = startX + (int)Mathf.Clamp(searchDirection.x, -1, 1) * i;
+            nextY = startY + (int)Mathf.Clamp(searchDirection.y, -1, 1) * i;
+
+            if (!IsWithinBounds(nextX, nextY))
+            {
+                break;
+            }
+
+            GamePiece nextPiece = allGamePieces[nextX, nextY];
+
+            if (nextPiece.matchValue == startPiece.matchValue && !matches.Contains(nextPiece))
+            {
+                matches.Add(nextPiece);
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (matches.Count >= minLenght)
+        {
+            return matches;
+        }
+
+        return null;
     }
 }

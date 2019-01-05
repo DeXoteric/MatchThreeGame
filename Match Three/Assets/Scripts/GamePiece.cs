@@ -6,6 +6,7 @@ public class GamePiece : MonoBehaviour
     [SerializeField] private int xIndex;
     [SerializeField] private int yIndex;
     [SerializeField] private InterpolationType interpolationType = InterpolationType.SmootherStep;
+    [SerializeField] public MatchValue matchValue;
 
     private Board board;
 
@@ -19,6 +20,18 @@ public class GamePiece : MonoBehaviour
         SmoothStep,
         SmootherStep
     };
+
+    public enum MatchValue
+    {
+        Yellow,
+        Orange,
+        Red,
+        Blue,
+        Green,
+        Purple,
+        Cyan,
+        Wild
+    }
 
     
     private void Update()
